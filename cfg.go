@@ -20,7 +20,7 @@ func Get(c interface{}) (ok error) {
 
 	b, ok := ioutil.ReadFile(file)
 	if ok != nil {
-		return put(&c)
+		return put(&c, ok)
 	}
 	ok = json.Unmarshal(b, &c)
 	if ok != nil {
@@ -30,7 +30,7 @@ func Get(c interface{}) (ok error) {
 	return ok
 }
 
-func put(o interface{}) error {
+func put(o interface{}, e error) error {
 	j, ok := json.MarshalIndent(&o, "", "\t")
 	if ok != nil {
 		return ok
@@ -43,5 +43,5 @@ func put(o interface{}) error {
 	println("\n\tWe created a new config template file for you.")
 	println("\tPlease edit the file: ", file)
 	println("\tFile mode is set to 664!\n")
-	return nil
+	return e
 }
