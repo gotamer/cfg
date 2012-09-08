@@ -11,7 +11,6 @@ package cfg
 import (
 	"encoding/json"
 	"io/ioutil"
-	"fmt"
 )
 
 const file = "cfg.json"
@@ -26,7 +25,6 @@ func Get(c interface{}) (ok error) {
 	if ok != nil {
 		println("Bad json File: ", ok)
 	}
-	fmt.Printf("%s", c)
 	return ok
 }
 
