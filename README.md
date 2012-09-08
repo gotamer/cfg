@@ -25,9 +25,10 @@ definition in your main application, if it doesn't already exist.
 	}
 
 	func main() {
-		ok := cfg.Get(Cfg)
-		if ok != nil {
-			println("Handle your errors: ", ok)
+		err := cfg.Get(Cfg)
+		if err != nil {
+			println("Handle your errors: ", err)
+			return
 		}
 		fmt.Printf("%s", Cfg)
 	}

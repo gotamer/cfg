@@ -15,31 +15,31 @@ import (
 
 const file = "cfg.json"
 
-func Get(c interface{}) (ok error) {
+func Get(c interface{}) (err error) {
 
-	b, ok := ioutil.ReadFile(file)
-	if ok != nil {
-		return put(&c, ok)
+	b, err := ioutil.ReadFile(file)
+	if err != nil {
+		return put(&c, err)
 	}
-	ok = json.Unmarshal(b, &c)
-	if ok != nil {
-		println("Bad json File: ", ok)
+	err = json.Unmarshal(b, &c)
+	if err != nil {
+		println("Bad json File: ", err)
 	}
-	return ok
+	return err
 }
 
-func put(o interface{}, e error) error {
-	j, ok := json.MarshalIndent(&o, "", "\t")
-	if ok != nil {
-		return ok
+func put(o interface{}, perr error) error {
+	j, err := json.MarshalIndent(&o, "", "\t")
+	if err != nil {
+		return err
 	}
 
-	ok = ioutil.WriteFile(file, j, 0664)
-	if ok != nil {
-		return ok
+	err = ioutil.WriteFile(file, j, 0664)
+	if err != nil {
+		return err
 	}
 	println("\n\tWe created a new config template file for you.")
 	println("\tPlease edit the file: ", file)
 	println("\tFile mode is set to 664!\n")
-	return e
+	return perr
 }
