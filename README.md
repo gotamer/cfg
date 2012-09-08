@@ -33,8 +33,8 @@ definition in your main application, if it doesn't already exist.
 	}
 
 
-Had some help creating this package, you can read all about it at:  
-https://groups.google.com/forum/?fromgroups=#!topic/golang-nuts/3iYS3UNYJUo
+Had some help creating this package, you can read all about it at 
+[Go Nuts](https://groups.google.com/forum/?fromgroups=#!topic/golang-nuts/3iYS3UNYJUo "Go Nuts")
 
 
 Copyright (c) 2012 The GoTamer Authors. All rights reserved.
