@@ -11,21 +11,34 @@ package cfg
 import (
 	"encoding/json"
 	"io/ioutil"
+	"os"
 )
 
-const file = "cfg.json"
+const DS = "/"
+
+var (
+	GOPATH  = os.Getenv("GOPATH")
+	APPL    string
+	CfgFile string
+)
 
 func Get(c interface{}) (err error) {
 
-	b, err := ioutil.ReadFile(file)
+	if APPL == "" {
+		panic("Please set your application name first. cfg.APPL = \"CafeMaker\"")
+		os.Exit(2)
+	}
+	CfgFile = GOPATH + DS + "etc" + DS + APPL + ".json"
+
+	b, err := ioutil.ReadFile(CfgFile)
 	if err != nil {
 		return put(&c, err)
 	}
 	err = json.Unmarshal(b, &c)
 	if err != nil {
-		println("Bad json File: ", err)
+		return err
 	}
-	return err
+	return nil
 }
 
 func put(o interface{}, perr error) error {
@@ -34,12 +47,12 @@ func put(o interface{}, perr error) error {
 		return err
 	}
 
-	err = ioutil.WriteFile(file, j, 0664)
+	err = ioutil.WriteFile(CfgFile, j, 0660)
 	if err != nil {
 		return err
 	}
 	println("\n\tWe created a new config template file for you.")
-	println("\tPlease edit the file: ", file)
-	println("\tFile mode is set to 664!\n")
+	println("\tPlease edit the file: ", CfgFile)
+	println("\tFile mode is set to 660!\n")
 	return perr
 }

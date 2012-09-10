@@ -7,36 +7,9 @@ gotamer/cfg creates a json template file for you, according to the struct
 definition in your main application, if it doesn't already exist.
 
 
-	package main
+[Documantation & HowTo](http://robotamer.bitbucket.org/html/GoTamer/cfg.html "gotamer/cfg Documentation")
 
-	import (
-		"gotamer/cfg" // Or bitbucket.org/gotamer/cfg
-		"fmt"
-	)
-
-	var Cfg JsonCfg
-
-	type JsonCfg struct{
-		Appl       string
-		Hostname   string
-		ListenAddr string
-		IpAddr     string
-		Debug      uint
-	}
-
-	func main() {
-		err := cfg.Get(Cfg)
-		if err != nil {
-			println("Handle your errors: ", err)
-			return
-		}
-		fmt.Printf("%s", Cfg)
-	}
-
-
-Had some help creating this package, you can read all about it at 
-[Go Nuts](https://groups.google.com/forum/?fromgroups=#!topic/golang-nuts/3iYS3UNYJUo "Go Nuts")
-
+________________________________________________________
 
 Copyright (c) 2012 The GoTamer Authors. All rights reserved.
 ============================================================
