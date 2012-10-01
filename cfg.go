@@ -74,8 +74,10 @@ func mkpath() (p string) {
 func path() (p string) {
 	const ps = "/"
 	if APPL == "" {
-		panic("Please set your application name first. cfg.APPL = \"CafeMaker\"")
-		os.Exit(1)
+		println("")
+		println("Please set your application name first. cfg.APPL = \"CafeMaker\"")
+		println("")
+		os.Exit(-1)
 	} else {
 		if Name == "" {
 			basepath = GOPATH + ps + "etc"
