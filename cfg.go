@@ -24,9 +24,11 @@ import (
 	"os"
 )
 
+// Name is optional, without name the file will be $GOPATH/etc/[APPL].json
+// With Name the file will be $GOPATH/etc/[APPL]/[Name].json
 var (
 	GOPATH = os.Getenv("GOPATH")
-	APPL   string
+	APPL   string // What ever the name of your main package is.
 	Name   string // Name for the file to be used without extention
 )
 
