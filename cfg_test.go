@@ -12,6 +12,7 @@ func TestGet(t *testing.T) {
 	type Sqlite struct {
 		Path string
 	}
+	ROOT = 11
 	APPL = "cfgtest"
 	Name = "database"
 	sql := new(Sqlite)

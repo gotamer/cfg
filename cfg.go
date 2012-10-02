@@ -20,6 +20,7 @@ package cfg
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"os"
 )
@@ -29,9 +30,9 @@ import (
 // With Name the file will be 
 //     $GOPATH/etc/[APPL]/[Name].json
 var (
-	GOPATH = os.Getenv("GOPATH")
-	APPL   string // What ever the name of your main package is.
-	Name   string // Name for the file to be used without extention
+	ROOT uint8
+	APPL string // What ever the name of your main package is.
+	Name string // Name for the file to be used without extention
 )
 
 // Get gets your config and fills your struct with the option from the json file
@@ -60,36 +61,75 @@ func Save(o interface{}) error {
 func createTemplate(o interface{}) (err error) {
 	p := mkpath()
 	if err = Save(o); err == nil {
-		println("\n\tWe created a new config template file for you.")
-		println("\tFile mode is set to 660!\n")
-		println("\tPlease edit the file: \n", p)
+		fmt.Println("\n\tWe created a new config template file for you.")
+		fmt.Println("\tFile mode is set to 660!\n")
+		fmt.Println("\tPlease edit the file: \n", p)
 	}
 	return err
 }
 
 var basepath string
 
+// @todo check write permission for basepath first
 func mkpath() (p string) {
 	p = path()
 	os.MkdirAll(basepath, 0770)
 	return
 }
 
-func path() (p string) {
+func path() (path string) {
 	const ps = "/"
 	if APPL == "" {
-		println("")
-		println("Please set your application name first. cfg.APPL = \"CafeMaker\"")
-		println("")
-		os.Exit(-1)
+		printError(2)
+	}
+
+	switch ROOT {
+	case 1, 11:
+		basepath = os.Getenv("GOPATH") + "/etc/"
+	case 2, 12:
+		basepath = os.Getenv("HOME") + "/."
+	case 3, 13:
+		basepath = os.Getenv("HOME") + "/.config/"
+	case 4, 14:
+		basepath = os.Getenv("HOME") + "/.go/etc/"
+	case 5, 15:
+		basepath = "/etc/"
+	default:
+		printError(1)
+	}
+
+	if ROOT < 10 {
+		path = basepath + APPL + ".json"
 	} else {
-		if Name == "" {
-			basepath = GOPATH + ps + "etc"
-			p = basepath + ps + APPL + ".json"
-		} else {
-			basepath = GOPATH + ps + "etc" + ps + APPL
-			p = basepath + ps + Name + ".json"
-		}
+		path = basepath + APPL + ps + Name + ".json"
 	}
 	return
+}
+
+func printError(errorno uint8) {
+	fmt.Println("")
+	fmt.Println("gotamer/cfg ERROR")
+	fmt.Println("")
+	switch errorno {
+	case 1:
+		fmt.Println("Please set your ROOT configuration folder.")
+		fmt.Println("")
+		fmt.Println("\tcfg.ROOT = 1 // $GOPATH/etc/[APPL].json")
+		fmt.Println("\tcfg.ROOT = 2 // $HOME/.[APPL].json")
+		fmt.Println("\tcfg.ROOT = 3 // $HOME/.config/[APPL].json")
+		fmt.Println("\tcfg.ROOT = 4 // $HOME/.go/etc/[APPL].json")
+		fmt.Println("\tcfg.ROOT = 5 // /etc/[APPL].json")
+
+		fmt.Println("\tcfg.ROOT = 11 // $GOPATH/etc/[APPL]/Name.json")
+		fmt.Println("\tcfg.ROOT = 12 // $HOME/.[APPL]/Name.json")
+		fmt.Println("\tcfg.ROOT = 13 // $HOME/.config/[APPL]/Name.json")
+		fmt.Println("\tcfg.ROOT = 14 // $HOME/.go/etc/[APPL]/Name.json")
+		fmt.Println("\tcfg.ROOT = 15 // /etc/[APPL]/Name.json")
+	case 2:
+		fmt.Println("Please set your application name first. cfg.APPL = \"CafeMaker\"")
+	default:
+		fmt.Println("Undefined error.")
+	}
+	fmt.Println("")
+	os.Exit(-1)
 }
