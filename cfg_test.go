@@ -8,27 +8,32 @@ import (
 	"testing"
 )
 
-func TestGet(t *testing.T) {
-	type Sqlite struct {
-		Path string
-	}
-	ROOT = 11
-	APPL = "cfgtest"
-	Name = "database"
+const filename = "/tmp/testcfg.json"
+const dbpath = "/tmp/my.db"
+
+type Sqlite struct {
+	Path string
+}
+
+func TestSave(t *testing.T) {
+
 	sql := new(Sqlite)
-	if err := Get(sql); err != nil {
-		t.Errorf("Config Get 1 Error: %g", err)
-	}
-	sql.Path = "/tmp"
-	if err := Save(sql); err != nil {
+	sql.Path = dbpath
+
+	if err := Save(filename, sql); err != nil {
 		t.Errorf("Config Save Error: %g", err)
 	}
+}
 
-	sqltwo := new(Sqlite)
-	if err := Get(sqltwo); err != nil {
-		t.Errorf("Config Get 2 error : %g", err)
+func TestLoad(t *testing.T) {
+
+	sql := new(Sqlite)
+
+	if err := Load(filename, sql); err != nil {
+		t.Errorf("Config Load Error: %g", err)
 	}
-	if sqltwo.Path != "/tmp" {
-		t.Errorf("Config should be \tmp : %s", sqltwo.Path)
+
+	if sql.Path != dbpath {
+		t.Errorf("Config Path doesn't match: %s", sql.Path)
 	}
 }
