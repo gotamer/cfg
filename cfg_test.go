@@ -1,22 +1,22 @@
 // Copyright (c) 2012 The GoTamer Authors. All rights reserved.
 // Use of this source code is governed by the MIT license.
-// The license can be found at http://www.robotamer.com 
+// The license can be found at http://www.robotamer.com
 
 package cfg
 
 import (
+	"os"
 	"testing"
 )
 
-const filename = "/tmp/testcfg.json"
-const dbpath = "/tmp/my.db"
+var filename = os.TempDir() + "/testcfg.json"
+var dbpath = os.TempDir() + "/testcfg.db"
 
 type Sqlite struct {
 	Path string
 }
 
 func TestSave(t *testing.T) {
-
 	sql := new(Sqlite)
 	sql.Path = dbpath
 

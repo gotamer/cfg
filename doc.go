@@ -1,6 +1,21 @@
 package cfg
 
 /*
+Following will create a config file that looks like this:
+
+	{
+		"Debug": 0,
+		"AdminName": "",
+		"AdminPass": "",
+		"Srv": {
+			"ListenAddr": "",
+			"IpAddr": "",
+			"Hostname": ""
+		}
+	}
+*/
+
+/*
 	package main
 
 	import (
