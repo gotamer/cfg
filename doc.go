@@ -21,7 +21,7 @@ Following will create a config file that looks like this:
 	import (
 		"bitbucket.org/gotamer/cfg"
 		"flag"
-		"log"
+		"fmt"
 		"os"
 	)
 
@@ -49,13 +49,13 @@ Following will create a config file that looks like this:
 		}
 		if err := cfg.Load(*cfg_file, &Cfg); err != nil {
 			if err = cfg.Save(*cfg_file, &Cfg); err != nil {
-				log.Println("cfg.Save error: ", err.Error())
-				os.Exit(0)
+				fmt.Println("cfg.Save error: ", err.Error())
+				os.Exit(1)
 			} else {
-				log.Println("Please edit your config file at:\n\n\t", *cfg_file)
+				fmt.Println("Please edit your config file at:\n\n\t", *cfg_file)
+				os.Exit(0)
 			}
 		}
-
 	}
 
 */
