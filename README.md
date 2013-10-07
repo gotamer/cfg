@@ -1,5 +1,5 @@
 gotamer/cfg
-###########
+===========
 
 ### gotamer/cfg is a json configuration package for Go
 

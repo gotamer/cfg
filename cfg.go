@@ -1,11 +1,12 @@
-// Copyright (c) 2012 The GoTamer Authors. All rights reserved.
-// Use of this source code is governed by the MIT license.
-// The license can be found at http://www.robotamer.com
-
 // gotamer/cfg is a json configuration package
 //     * You define your config items in your application as a struct.
 //     * You can save a json template of your struct
 //     * You can save runtime modifications to the config
+// See doc.go for an example
+
+// Copyright (c) 2012-2013 The GoTamer Authors. All rights reserved.
+// Use of this source code is governed by the MIT license.
+// The license can be found in the README.md file
 package cfg
 
 import (
