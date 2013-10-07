@@ -1,6 +1,6 @@
 // gotamer/cfg is a json configuration package
 //     * You define your config items in your application as a struct.
-//     * You can save a json template of your struct
+//     * A json config file template of your struct is saved on the first run
 //     * You can save runtime modifications to the config
 // See doc.go for an example
 
