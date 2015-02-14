@@ -9,31 +9,33 @@ import (
 	"testing"
 )
 
-var filename = os.TempDir() + "/testcfg.json"
-var dbpath = os.TempDir() + "/testcfg.db"
-
 type Sqlite struct {
 	Path string
+	Port int
+	Name string
+	Pass string
 }
 
-func TestSave(t *testing.T) {
-	sql := new(Sqlite)
-	sql.Path = dbpath
+var filename = os.TempDir() + "/testcfg.json"
 
+var dbpath = "/tmp/testcfg.db"
+var port int = 8000
+var name string = "TaMeR"
+var pass string = ":-)"
+var sql = &Sqlite{Path: dbpath, Port: port, Name: name, Pass: pass}
+
+func TestJson(t *testing.T) {
 	if err := Save(filename, sql); err != nil {
-		t.Errorf("Config Save Error: %g", err)
+		t.Errorf("Config Save Error: %s", err.Error())
 	}
-}
-
-func TestLoad(t *testing.T) {
-
-	sql := new(Sqlite)
-
-	if err := Load(filename, sql); err != nil {
-		t.Errorf("Config Load Error: %g", err)
+	sqllocal := new(Sqlite)
+	if err := Load(filename, sqllocal); err != nil {
+		t.Errorf("Config Load Error: %s", err.Error())
 	}
-
-	if sql.Path != dbpath {
-		t.Errorf("Config Path doesn't match: %s", sql.Path)
+	if sqllocal.Path != dbpath {
+		t.Errorf("Config Path doesn't match: %s", sqllocal.Path)
+	}
+	if sqllocal.Port != port {
+		t.Errorf("Config Path doesn't match: %s", sqllocal.Port)
 	}
 }

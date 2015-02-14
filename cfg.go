@@ -1,12 +1,8 @@
-// gotamer/cfg is a json configuration package
+// bitbucket.org/gotamer/cfg is a json configuration package
 //     * You define your config items in your application as a struct.
 //     * A json config file template from your struct is saved on the first run
 //     * You can save runtime modifications to the config
 // See doc.go for an example
-
-// Copyright (c) 2012-2013 The GoTamer Authors. All rights reserved.
-// Use of this source code is governed by the MIT license.
-// The license can be found in the README.md file
 package cfg
 
 import (
@@ -20,7 +16,6 @@ func Load(filename string, o interface{}) error {
 	b, err := ioutil.ReadFile(filename)
 	if err == nil {
 		err = json.Unmarshal(b, &o)
-		return err
 	}
 	return err
 }
@@ -31,7 +26,6 @@ func Save(filename string, o interface{}) error {
 	j, err := json.MarshalIndent(&o, "", "\t")
 	if err == nil {
 		err = ioutil.WriteFile(filename, j, 0660)
-		return err
 	}
 	return err
 }
